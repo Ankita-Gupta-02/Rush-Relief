@@ -80,8 +80,8 @@ function Login() {
         <div className="w-1/2 h-full flex justify-center items-center">
           <div class="w-full max-w-sm p-4 bg-white bg-opacity-40 backdrop-blur-lg border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
             <form class="space-y-6" onSubmit={handleSubmit}>
-              <h5 class="text-xl font-medium text-gray-900 dark:text-white">
-                Sign in to our platform
+              <h5 class="text-xl font-extrabold text-gray-900 dark:text-white">
+                Sign in
               </h5>
               <div>
                 <label

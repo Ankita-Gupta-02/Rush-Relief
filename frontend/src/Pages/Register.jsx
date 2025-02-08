@@ -81,7 +81,7 @@ function Register() {
             <div class="w-full max-w-sm p-4 border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
               <form class="space-y-6" onSubmit={handleSubmit}>
                 <h5 class="text-2xl font-extrabold text-black text-center">
-                  Sign up to our platform
+                  Sign up
                 </h5>
                 <div>
                   <label
