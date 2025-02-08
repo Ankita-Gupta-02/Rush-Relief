@@ -63,6 +63,12 @@ function Home() {
     "Stomach Care", "Pain Relief", "Fitness Supplements", "Healthy Snacks"
   ];
 
+  const handleBuy = (id)=>{
+    localStorage.removeItem("cart")
+    addCardItem(id);
+    navigate("/cart")
+  }
+
   return (
     <div className="bg-gradient-to-r from-blue-200 to-green-200">
       <ToastContainer />
@@ -111,7 +117,7 @@ function Home() {
                 >
                   <ShoppingCart size={18} /> Add to Cart
                 </button>
-                <button className="flex items-center gap-2 text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg">
+                <button onClick={()=>{handleBuy(product._id)}} className="flex items-center gap-2 text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg">
                   <ShoppingBag size={18} /> Buy Now
                 </button>
               </div>

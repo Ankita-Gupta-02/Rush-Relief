@@ -17,6 +17,7 @@ function Checkout({ isOpen, onClose, products }) {
     try {
       const data = await POST("order/new", { address, paymentMode, products });
       alert(data.message);
+      localStorage.removeItem("cart");
     } catch (error) {
       alert(error);
     }
