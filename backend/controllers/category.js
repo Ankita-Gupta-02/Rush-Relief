@@ -1,9 +1,9 @@
-import { Product } from "../models/Product.js";
+import { Category } from "../models/category.js";
 
-export const getProducts = async (req,res)=>{
+export const getCategories = async (req,res)=>{
 try {
-    const products = await Product.find().populate("category")
-    return res.status(200).send({products})
+    const categories = await Category.find()
+    return res.status(200).send({categories})
 } catch (error) {
     console.log(error);
     return res
@@ -13,11 +13,11 @@ try {
 }
 
 
-export const getProduct = async (req,res)=>{
+export const getCategory = async (req,res)=>{
     try {
         const {id} = req.params
-        const product = await Product.findById(id).populate("category")
-        return res.status(200).send({product})
+        const category = await Category.findById(id)
+        return res.status(200).send({category})
     } catch (error) {
         console.log(error);
         return res
