@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Landing from "./Landing";
 import Home from "./Home";
@@ -8,13 +8,14 @@ import Cart from "./Cart";
 
 function Dash() {
   return (
-    <div>
+    <div className="min-h-screen">
       <Navbar />
       <Routes>
         <Route path="/landing" element={<Landing />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<Navigate to="/landing" replace />} />
       </Routes>
     </div>
   );

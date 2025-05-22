@@ -16,21 +16,26 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    width: "90%",
+    maxWidth: "500px",
   },
 };
 
 function Register() {
-  const iconSize = 30;
   const [loading, setLoading] = useState(false);
   const [otpSent, setOTPSent] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
+    name: "",
+    address: "",
+    contact: ""
   });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -52,16 +57,23 @@ function Register() {
       text="Please wait..."
     >
       <div className="relative w-screen h-screen">
-        <Modal isOpen={otpSent} style={customStyles} contentLabel="Enter OTP">
+        <Modal 
+          isOpen={otpSent} 
+          style={customStyles} 
+          contentLabel="Enter OTP"
+          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4"
+        >
           <OTP email={form.email} />
         </Modal>
         <img src={BG} alt="Background" className="w-full h-full object-cover" />
 
-        <div className="absolute top-0 w-screen h-screen flex flex-row">
-          <div className="w-1/2 h-full flex gap-10 flex-col text-black opacity-90 justify-center ps-40 pr-20">
-            <h1 className="font-extrabold text-8xl ">Welcome</h1>
-            <span className="text-black ">
-              we’re here to make your health and wellness journey easier. With
+        <div className="absolute top-0 w-screen h-screen flex flex-col lg:flex-row">
+          <div className="w-full lg:w-1/2 h-full flex gap-5 lg:gap-10 flex-col text-black opacity-90 justify-center px-4 sm:px-8 lg:ps-20 lg:pr-10">
+            <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-7xl xl:text-8xl">
+              Welcome
+            </h1>
+            <span className="text-black text-sm sm:text-base">
+              We're here to make your health and wellness journey easier. With
               fast and convenient delivery, simple prescription refills. We aim
               to provide you with the care you deserve right at your fingertips.
               <br /> <br />
@@ -70,23 +82,23 @@ function Register() {
               Fingertips.
             </span>
 
-            <div className="flex flex-row gap-5">
-              <Facebook size={iconSize} cursor={"pointer"} />
-              <Instagram size={iconSize} cursor={"pointer"} />
-              <Twitter size={iconSize} cursor={"pointer"} />
-              <Youtube size={iconSize} cursor={"pointer"} />
+            <div className="flex flex-row gap-3 sm:gap-5">
+              <Facebook size={24} className="sm:w-7 sm:h-7 cursor-pointer hover:scale-110 transition-transform" />
+              <Instagram size={24} className="sm:w-7 sm:h-7 cursor-pointer hover:scale-110 transition-transform" />
+              <Twitter size={24} className="sm:w-7 sm:h-7 cursor-pointer hover:scale-110 transition-transform" />
+              <Youtube size={24} className="sm:w-7 sm:h-7 cursor-pointer hover:scale-110 transition-transform" />
             </div>
           </div>
-          <div className="w-1/2 h-full flex justify-center items-center">
-            <div class="w-full max-w-sm p-4 border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-              <form class="space-y-6" onSubmit={handleSubmit}>
-                <h5 class="text-2xl font-extrabold text-black text-center">
+          <div className="w-full lg:w-1/2 h-full flex justify-center items-center p-4 sm:p-6">
+            <div className="w-full max-w-sm p-4 sm:p-6 bg-white bg-opacity-40 backdrop-blur-lg border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+                <h5 className="text-lg sm:text-2xl font-extrabold text-black text-center">
                   Sign up
                 </h5>
                 <div>
                   <label
-                    for="address"
-                    class="block mb-2 text-sm font-medium text-black"
+                    htmlFor="address"
+                    className="block mb-2 text-sm font-medium text-black"
                   >
                     Your address
                   </label>
@@ -95,32 +107,32 @@ function Register() {
                     name="address"
                     id="address"
                     onChange={handleChange}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Your address"
                     required
                   />
                 </div>
                 <div>
                   <label
-                    for="contact"
-                    class="block mb-2 text-sm font-medium text-black"
+                    htmlFor="contact"
+                    className="block mb-2 text-sm font-medium text-black"
                   >
                     Your contact
                   </label>
                   <input
-                    type="phone"
+                    type="tel"
                     name="contact"
                     id="contact"
                     onChange={handleChange}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Your contact"
                     required
                   />
                 </div>
                 <div>
                   <label
-                    for="name"
-                    class="block mb-2 text-sm font-medium text-black"
+                    htmlFor="name"
+                    className="block mb-2 text-sm font-medium text-black"
                   >
                     Your name
                   </label>
@@ -129,15 +141,15 @@ function Register() {
                     name="name"
                     id="name"
                     onChange={handleChange}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="User name"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Your name"
                     required
                   />
                 </div>
                 <div>
                   <label
-                    for="email"
-                    class="block mb-2 text-sm font-medium text-black"
+                    htmlFor="email"
+                    className="block mb-2 text-sm font-medium text-black"
                   >
                     Your email
                   </label>
@@ -146,15 +158,15 @@ function Register() {
                     name="email"
                     id="email"
                     onChange={handleChange}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="name@company.com"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Enter your email"
                     required
                   />
                 </div>
                 <div>
                   <label
-                    for="password"
-                    class="block mb-2 text-sm font-medium text-black"
+                    htmlFor="password"
+                    className="block mb-2 text-sm font-medium text-black"
                   >
                     Your password
                   </label>
@@ -164,22 +176,22 @@ function Register() {
                     id="password"
                     onChange={handleChange}
                     placeholder="••••••••"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
                   />
                 </div>
 
                 <button
                   type="submit"
-                  class="w-180px text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="w-full text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors"
                 >
                   Register to your account
                 </button>
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                   Already registered?{" "}
                   <Link
                     to="/login"
-                    class="text-blue-700 hover:underline dark:text-blue-500"
+                    className="text-blue-700 hover:underline dark:text-blue-500"
                   >
                     Login
                   </Link>

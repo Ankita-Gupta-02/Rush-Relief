@@ -19,7 +19,9 @@ function Home() {
       const data = await GET("product/list");
       setProducts(data.products);
       setFilteredProducts(data.products);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
 
   useEffect(() => {
@@ -63,67 +65,91 @@ function Home() {
     "Stomach Care", "Pain Relief", "Fitness Supplements", "Healthy Snacks"
   ];
 
-  const handleBuy = (id)=>{
-    localStorage.removeItem("cart")
+  const handleBuy = (id) => {
+    localStorage.removeItem("cart");
     addCardItem(id);
-    navigate("/cart")
-  }
+    navigate("/cart");
+  };
 
   return (
-    <div className="bg-gradient-to-r from-blue-200 to-green-200">
+    <div className="bg-gradient-to-r from-blue-200 to-green-200 min-h-screen">
       <ToastContainer />
-      <div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
-        {categories.map((category) => (
-          <button
-            key={category}
-            type="button"
-            className={`text-emerald-900 border border-white hover:border-emerald-200 bg-white focus:ring-4 focus:outline-none focus:ring-emerald-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 ${
-              selectedCategory === category ? "bg-emerald-700 text-black" : ""
-            }`}
-            onClick={() => handleCategoryClick(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {filteredProducts.map((product) => {
-          const discount = product.mrp - product.price;
-
-          return (
-            <div
-              key={product._id}
-              className="border rounded-lg p-4 shadow-lg bg-white dark:bg-gray-900"
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex items-center justify-center py-3 sm:py-4 md:py-6 flex-wrap gap-2 sm:gap-3 overflow-x-auto pb-4">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              className={`text-emerald-900 border border-white hover:border-emerald-200 bg-white focus:ring-4 focus:outline-none focus:ring-emerald-300 rounded-full text-xs sm:text-sm md:text-base font-medium px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 text-center whitespace-nowrap transition-colors duration-200 ${
+                selectedCategory === category ? "bg-emerald-700 text-white" : ""
+              }`}
+              onClick={() => handleCategoryClick(category)}
             >
-              <Carousel showThumbs={false} autoPlay stopOnHover={false} infiniteLoop>
-                {product.images.map((image, index) => (
-                  <div key={index}>
-                    <img className="h-80 w-full rounded-md" src={image} alt={product.title} />
-                  </div>
-                ))}
-              </Carousel>
-              <h3 className="text-lg font-semibold mt-2">{product.title}</h3>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-lg font-bold text-green-600">₹{product.price}</span>
-                <span className="text-gray-500 line-through">₹{product.mrp}</span>
-                <span className="text-red-500 text-sm">
-                  ({Math.round((discount / product.mrp) * 100)}% OFF)
-                </span>
-              </div>
-              <div className="flex justify-between mt-4">
-                <button
-                  className="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg"
-                  onClick={() => handleAddToCart(product._id)}
-                >
-                  <ShoppingCart size={18} /> Add to Cart
-                </button>
-                <button onClick={()=>{handleBuy(product._id)}} className="flex items-center gap-2 text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg">
-                  <ShoppingBag size={18} /> Buy Now
-                </button>
-              </div>
+              {category}
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+          {filteredProducts.length === 0 ? (
+            <div className="col-span-full text-center py-8">
+              <p className="text-gray-600 text-lg">No products found</p>
+              <p className="text-gray-500 mt-2">Try a different category or search term</p>
             </div>
-          );
-        })}
+          ) : (
+            filteredProducts.map((product) => {
+              const discount = product.mrp - product.price;
+
+              return (
+                <div
+                  key={product._id}
+                  className="border rounded-lg p-4 sm:p-5 shadow-lg bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                >
+                  <Carousel 
+                    showThumbs={false} 
+                    autoPlay 
+                    stopOnHover={false} 
+                    infiniteLoop
+                    showStatus={false}
+                    showIndicators={false}
+                    className="rounded-lg overflow-hidden"
+                  >
+                    {product.images.map((image, index) => (
+                      <div key={index} className="aspect-square">
+                        <img 
+                          className="h-full w-full object-cover" 
+                          src={image} 
+                          alt={product.title} 
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
+                  <h3 className="text-base sm:text-lg font-semibold mt-3 line-clamp-2">{product.title}</h3>
+                  <div className="flex items-center gap-2 mt-2 flex-wrap">
+                    <span className="text-base sm:text-lg font-bold text-green-600">₹{product.price}</span>
+                    <span className="text-sm sm:text-base text-gray-500 line-through">₹{product.mrp}</span>
+                    <span className="text-xs sm:text-sm text-red-500">
+                      ({Math.round((discount / product.mrp) * 100)}% OFF)
+                    </span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4 mt-4">
+                    <button
+                      className="flex items-center justify-center gap-2 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm sm:text-base transition-colors duration-200"
+                      onClick={() => handleAddToCart(product._id)}
+                    >
+                      <ShoppingCart size={16} className="sm:w-5 sm:h-5" /> Add to Cart
+                    </button>
+                    <button 
+                      onClick={() => handleBuy(product._id)} 
+                      className="flex items-center justify-center gap-2 text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm sm:text-base transition-colors duration-200"
+                    >
+                      <ShoppingBag size={16} className="sm:w-5 sm:h-5" /> Buy Now
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
       </div>
     </div>
   );

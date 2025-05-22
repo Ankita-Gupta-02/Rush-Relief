@@ -15,8 +15,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/dash/*" element={<Dash />} />
         <Route path="/cart" element={<Cart />} />
-
-        <Route path="*" element={<Navigate to={"/dash/landing"} />} />
+        <Route path="*" element={<Navigate to="/dash/landing" replace />} />
       </Routes>
     </BrowserRouter>
   );
